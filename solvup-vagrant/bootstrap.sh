@@ -31,26 +31,27 @@ BOTO_CONF
     rsync -rCcvz solvup.dev/ /etc/puppet/
     puppet apply --verbose --debug /etc/puppet/manifest/init.pp
 
-    sudo mkdir  /var/www/solvup_tic
-    sudo mkdir  -p /var/www/solvup_tic/RIA_RepairsTicGroup
+    sudo mkdir  /vagrant/solvup_tic
+    sudo mkdir  -p /vagrant/solvup_tic/RIA_RepairsTicGroup
 
     curl -LOk  https://gexchai:Altona3025@github.com/Conduct/RIA_RepairsTicGroup/archive/release-2.52.zip
 
     unzip release-2.52.zip 
 
 
-    sudo mv -f RIA_RepairsTicGroup-release-2.52/* /var/www/solvup_tic/RIA_RepairsTicGroup/
-    sudo cp -f /var/www/solvup_tic/RIA_RepairsTicGroup/app/config/bootstrap_LIVE.php  /var/www/solvup_tic/RIA_RepairsTicGroup/app/config/bootstrap.php
-    sudo cp -f /var/www/solvup_tic/RIA_RepairsTicGroup/app/config/core_LIVE.php /var/www/solvup_tic/RIA_RepairsTicGroup/app/config/core.php
-    sudo cp -f /var/www/solvup_tic/RIA_RepairsTicGroup/app/config/database_LIVE.php /var/www/solvup_tic/RIA_RepairsTicGroup/app/config/database.php
+    sudo mv -f RIA_RepairsTicGroup-release-2.52/* /vagrant/solvup_tic/RIA_RepairsTicGroup/
+    sudo cp -f /vagrant/solvup_tic/RIA_RepairsTicGroup/app/config/bootstrap_LIVE.php  /vagrant/solvup_tic/RIA_RepairsTicGroup/app/config/bootstrap.php
+    sudo cp -f /vagrant/solvup_tic/RIA_RepairsTicGroup/app/config/core_LIVE.php /vagrant/solvup_tic/RIA_RepairsTicGroup/app/config/core.php
+    sudo cp -f /vagrant/solvup_tic/RIA_RepairsTicGroup/app/config/database_LIVE.php /vagrant/solvup_tic/RIA_RepairsTicGroup/app/config/database.php
 
-    sudo mkdir -p /var/www/solvup_tic/RIA_RepairsTicGroup/app/tmp/cache
-    sudo mkdir -p /var/www/solvup_tic/RIA_RepairsTicGroup/app/tmp/cache/models
-    sudo mkdir -p /var/www/solvup_tic/RIA_RepairsTicGroup/app/tmp/cache/persistent
+    sudo mkdir -p /vagrant/solvup_tic/RIA_RepairsTicGroup/app/tmp/cache
+    sudo mkdir -p /vagrant/solvup_tic/RIA_RepairsTicGroup/app/tmp/cache/models
+    sudo mkdir -p /vagrant/solvup_tic/RIA_RepairsTicGroup/app/tmp/cache/persistent
     
-    sudo chmod -R 777 /var/www/solvup_tic/RIA_RepairsTicGroup/app/tmp
-    sudo chown -R vagrant:vagrant /var/www/solvup_tic
+    sudo chmod -R 777 /vagrant/solvup_tic/RIA_RepairsTicGroup/app/tmp
+    sudo chown -R vagrant:vagrant /vagrant/solvup_tic
 
+    sudo ln -s /vagrant/solvup_tic /var/www/
     sudo rm -rf /etc/php5/apache2/conf.d/20-mcrypt.ini
 
     sudo ln -s   /etc/php5/mods-available/mcrypt.ini /etc/php5/apache2/conf.d/20-mcrypt.ini
@@ -66,6 +67,8 @@ BOTO_CONF
     sudo a2ensite default-ssl.conf
 
     sudo service apache2 restart
+
+    sudo echo "127.0.0.1  local.solvup.com" >> /etc/hosts
 
     touch /home/vagrant/.bootstrapped
 fi
